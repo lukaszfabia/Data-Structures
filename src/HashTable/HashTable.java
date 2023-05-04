@@ -2,22 +2,24 @@ package HashTable;
 
 import java.util.LinkedList;
 
-public class HashTable<T> {
+public class HashTable<T> implements MyTable<T> {
     LinkedList<T>[] arr;
-    private final static int defaultInitSize=8;
-    private final static double defaultMaxLoadFactor=0.7;
+    private final static int defaultInitSize = 8;
+    private final static double defaultMaxLoadFactor = 0.7;
     private int size;
     private final double maxLoadFactor;
+
     public HashTable() {
         this(defaultInitSize);
     }
+
     public HashTable(int size) {
-        this(size,defaultMaxLoadFactor);
+        this(size, defaultMaxLoadFactor);
     }
 
 
     public HashTable(int initCapacity, double maxLF) {
-        if(initCapacity<2) {
+        if (initCapacity < 2) {
             initCapacity = 2;
         }
 
@@ -32,24 +34,25 @@ public class HashTable<T> {
 
     private void createLists(LinkedList<T>[] arr, int length) {
         for (int i = 0; i < length; i++) {
-            arr[i]=new LinkedList<>();
+            arr[i] = new LinkedList<>();
         }
     }
 
-    private int index(T element, int size){
-        return element.hashCode()%size;
+    private int index(T element, int size) {
+        return element.hashCode() % size;
     }
 
-    private boolean ifContains(T element){
+    private boolean ifContains(T element) {
         int index = index(element, arr.length);
-        for (T o : arr[index]){
-            if (element.equals(o)){
+        for (T o : arr[index]) {
+            if (element.equals(o)) {
                 return true;
             }
         }
         return false;
     }
 
+    @Override
     public boolean add(T elem) {
         if (ifContains(elem))
             return false;
@@ -58,7 +61,7 @@ public class HashTable<T> {
         arr[index].add(elem);
         size++;
 
-        if (((double) size/arr.length) > maxLoadFactor) {
+        if (((double) size / arr.length) > maxLoadFactor) {
             doubleArray();
         }
 
@@ -105,8 +108,8 @@ public class HashTable<T> {
         return sb.toString();
     }
 
-
-    public Object get(T toFind) {
+    @Override
+    public T get(T toFind) {
         int index = index(toFind, arr.length);
 
         for (T o : arr[index]) {
