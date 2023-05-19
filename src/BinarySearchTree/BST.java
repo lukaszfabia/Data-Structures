@@ -109,7 +109,9 @@ public class BST<T extends Comparable<T>> {
                     queue.add(curr.right);
                 }
             }
-            return sb.substring(0, sb.toString().length()-2);
+            if (sb.toString().length()>2){
+                return sb.substring(0, sb.toString().length()-2);
+            }
         }
         return null;
     }
