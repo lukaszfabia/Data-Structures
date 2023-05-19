@@ -1,5 +1,8 @@
 package BinarySearchTree;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class BST<T extends Comparable<T>> {
 
     private class Node {
@@ -90,6 +93,26 @@ public class BST<T extends Comparable<T>> {
         }
     }
 
+    public String toStringLevelOrder(){
+        StringBuilder sb = new StringBuilder();
+        if (root!=null){
+            Queue<Node> queue = new LinkedList<>();
+            queue.add(root);
+            while (!queue.isEmpty()){
+                Node curr = queue.poll();
+                sb.append(curr.value).append(", ");
+
+                if (curr.left!=null){
+                    queue.add(curr.left);
+                }
+                if (curr.right!=null){
+                    queue.add(curr.right);
+                }
+            }
+            return sb.substring(0, sb.toString().length()-2);
+        }
+        return null;
+    }
 
     public String toStringInOrder() {
         StringBuilder sb = new StringBuilder();
